@@ -17,10 +17,20 @@ player.on("timeupdate", throttle(function (data) {
 
 },1000));
 
-player.setCurrentTime(localStorage.getItem(TIME_DATA_PLAYER))
 
+player.setCurrentTime(localStorage.getItem(TIME_DATA_PLAYER)).then(function(seconds) {
+    
+}).catch(function(error) {
+    switch (error.name) {
+        case 'RangeError':
+            
+            break;
 
+        default:
 
+            break;
+    }
+});
 
 
 

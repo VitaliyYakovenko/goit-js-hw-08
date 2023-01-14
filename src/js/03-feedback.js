@@ -8,35 +8,54 @@ const textareaEl = document.querySelector("textarea");
 formEl.addEventListener("submit", onEnterForm);
 formEl.addEventListener("input", throttle(onGetValueForm,500));
 
-const formData = {};
+
+const formData = {
+    email: "",
+    message: "",
+}
 
 
 function onGetValueForm(event) {
-    formData[event.target.name] = event.target.value;
-    const string = JSON.stringify(formData);
-    localStorage.setItem(FEEDBACK_FORM, string)
-    
+    formData.email = inputEmail.value;
+    formData.message = textareaEl.value;
+    const parseString = JSON.stringify(formData);
+    localStorage.setItem(FEEDBACK_FORM,parseString)
 }
 
-function onEnterForm(event) { 
+// //  1@mail.com
+function onEnterForm(event) {
     event.preventDefault();
-    event.target.reset();
-    localStorage.removeItem(FEEDBACK_FORM)
-    console.log(formData);
+    if (inputEmail.value === "" || textareaEl.value === "") {
+        alert("Заполните все поля")
+    } else {
+        event.target.reset();
+        console.log(formData)
+    }
+
+    localStorage.removeItem(FEEDBACK_FORM);
+}
+
+getLocalValue()
+
+function getLocalValue() {
+    const dataObj = localStorage.getItem(FEEDBACK_FORM);
+    const valueObj = JSON.parse(dataObj);
+    if (dataObj) {
+        inputEmail.value = valueObj.email;
+        textareaEl.value = valueObj.message;
+    }
 }
 
 
-const dataObj = localStorage.getItem(FEEDBACK_FORM)
-function valueInpText(obj) {
 
-    if (obj && inputEmail.name === "email") {
-        inputEmail.value = JSON.parse(obj).email || "";
-    }
-    if (obj && textareaEl.name === "message") {
-        textareaEl.value = JSON.parse(obj).message || "";
-    }
-}
-valueInpText(dataObj)
+
+
+
+
+
+
+
+
 
 
 
